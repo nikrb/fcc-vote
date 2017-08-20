@@ -42,7 +42,7 @@ function postChangePassword( payload){
 function getMyPolls( query) {
   let q = "";
   if( query.email){
-    q = "?email="+query.email;
+    q = "?email="+encodeURIComponent( query.email);
   }
   return fetch( '/api/mypolls'+q, {
     method: 'get',
@@ -60,6 +60,11 @@ function getAllPolls(){
     .then( checkStatus)
     .then( parseJSON);
 }
+function getPoll( poll_name){
+  return fetch( '/apo/poll?name='+encodeURIComponent( poll_name))
+    .then( checkStatus)
+    .then( parseJSON);
+}
 function savePoll( poll){
   const payload = { ...poll, owner: Auth.getEmail()};
   console.log( "savePoll payload:", payload);
@@ -69,6 +74,19 @@ function savePoll( poll){
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': `bearer ${Auth.getToken()}`
+    },
+    body: JSON.stringify( payload)
+  })
+  .then( checkStatus)
+  .then( parseJSON);
+}
+function pollVote( poll_name, text, email){
+  const payload = { name: poll_name, vote: text, email: email};
+  return fetch( '/apo/vote', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify( payload)
   })
@@ -93,6 +111,6 @@ function parseJSON(response) {
 
 const Actions = {
   postSignup, postLogin, postChangePassword,
-  getAllPolls, getMyPolls, savePoll
+  getAllPolls, getMyPolls, getPoll, savePoll, pollVote
 };
 export default Actions;
