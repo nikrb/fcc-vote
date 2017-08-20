@@ -1,10 +1,12 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import Actions from './Actions';
 import PollList from '../components/PollList';
 
 export default class HomePage extends React.Component {
   state = {
-    list: []
+    list: [],
+    redirectToPoll: false
   };
   componentWillMount = () => {
     Actions.getAllPolls()
@@ -12,14 +14,17 @@ export default class HomePage extends React.Component {
       this.setState( { list: response});
     });
   };
+  pollSelected = ( poll_name) => {
+    this.setState( {redirectToPoll: "/poll/"+encodeURIComponent( poll_name) });
+  };
   render = () => {
-    const poll_list = this.state.list.map( (d) => {
-      return { text: d.name, link: `site-url.com/${d.name}`};
-    });
+    if( this.state.redirectToPoll !== false){
+      return <Redirect to={this.state.redirectToPoll} />;
+    }
     return (
       <div className="App">
         <h1>FCC Voting Project</h1>
-        <PollList data={poll_list} />
+        <PollList data={this.state.list} onPollClick={this.pollSelected} />
       </div>
     );
   };
