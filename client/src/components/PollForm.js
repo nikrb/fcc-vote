@@ -9,6 +9,11 @@ export default class PollForm extends React.Component {
     new_option: PropTypes.string,
     errors: PropTypes.object
   };
+  onAddClick = (e) => {
+    this.props.addButtonClick();
+    this.option_field.focus();
+    this.option_field.select();
+  };
   render = () => {
     const {onSubmit, onChange, poll, errors} = this.props;
     const option_list = poll.options.map( (d,i)=>{
@@ -31,8 +36,9 @@ export default class PollForm extends React.Component {
           <div>
             {option_list}
             <input type="text" name="new_option" placeholder="new option"
-              value={this.props.new_option} onChange={onChange} />
-            <button type="button" onClick={onChange} name="add_option" >+</button>
+              value={this.props.new_option} onChange={onChange}
+              ref={(input) => { this.option_field = input;}} />
+            <button type="button" onClick={this.onAddClick} >+</button>
           </div>
           <div style={{margin:"10px"}}>
             <button type="submit" >Save</button>

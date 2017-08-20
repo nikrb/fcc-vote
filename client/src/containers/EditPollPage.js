@@ -24,6 +24,13 @@ export default class EditPollPage extends React.Component {
       this.setState( {redirectToList: true});
     });
   };
+  onAddClick = () => {
+    const np = {...this.state.poll};
+    const no = { text: this.state.new_option, votes: []};
+    const nol = this.state.poll.options.concat( no);
+    np.options = nol;
+    this.setState( {poll: np});
+  };
   onChange = ( e) => {
     const field_name = e.target.name;
     const np = {...this.state.poll};
@@ -47,7 +54,7 @@ export default class EditPollPage extends React.Component {
         <h2>Edit Poll</h2>
         <button type="button" style={{color:"red",background:"steelblue"}} >Delete this poll</button>
         <PollForm onChange={this.onChange} poll={this.state.poll} new_option={this.state.new_option}
-          onSubmit={this.processForm} errors={this.state.errors} />
+          onSubmit={this.processForm} errors={this.state.errors} addButtonClick={this.onAddClick} />
       </div>
     );
   };
