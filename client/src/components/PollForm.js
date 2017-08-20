@@ -31,8 +31,8 @@ export default class PollForm extends React.Component {
               <input type="text" name="name" value={poll.name} onChange={onChange} />
             </div>
           </label>
-          <div>
-            Options
+          <div style={{marginBottom:"10px"}}>
+            Options <span style={{fontSize:"8px"}}>(Click option to delete)</span>
           </div>
           <div>
             {option_list}
@@ -41,6 +41,7 @@ export default class PollForm extends React.Component {
               ref={(input) => { this.option_field = input;}} />
             <button type="button" onClick={this.onAddClick} >+</button>
           </div>
+          <div style={{fontSize:"8px"}}>Enter option text and hit tab, then space</div>
           <div style={{margin:"10px"}}>
             <button type="submit" >Save</button>
           </div>
