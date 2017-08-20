@@ -20,11 +20,11 @@ export default class MyPollsPage extends React.Component {
   createPoll = () => {
     this.setState( { redirectToEditPollPage: true, poll: {name:"unnamed", options:[]}});
   };
-  onPollClick = ( e) => {
+  onPollClick = ( name) => {
     // TODO: will this reduce to filter( p.name === e.target.name)?
-    const ep = this.state.list.filter( (p) => { return p.name === e.target.name;});
+    const ep = this.state.list.filter( (p) => { return p.name === name;});
     if( ep.length === 0){
-      console.error( `Find poll [${e.target.name}] failed`);
+      console.error( `Find poll [${name}] failed`);
     } else {
       this.setState( { redirectToEditPollPage: true, poll: ep[0]});
     }
