@@ -1,3 +1,4 @@
+import Auth from '../modules/Auth';
 
 function postSignup( payload){
   return fetch( '/auth/signup', {
@@ -38,6 +39,42 @@ function postChangePassword( payload){
   .then( checkStatus)
   .then( parseJSON);
 }
+function getMyPolls( query) {
+  let q = "";
+  if( query.email){
+    q = "?email="+query.email;
+  }
+  return fetch( '/api/mypolls'+q, {
+    method: 'get',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `bearer ${Auth.getToken()}`
+    }
+  })
+  .then( checkStatus)
+  .then( parseJSON);
+}
+function getAllPolls(){
+  return fetch( '/apo/polls')
+    .then( checkStatus)
+    .then( parseJSON);
+}
+function savePoll( poll){
+  const payload = { ...poll, owner: Auth.getEmail()};
+  console.log( "savePoll payload:", payload);
+  return fetch( '/api/poll', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `bearer ${Auth.getToken()}`
+    },
+    body: JSON.stringify( payload)
+  })
+  .then( checkStatus)
+  .then( parseJSON);
+}
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -54,5 +91,8 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Actions = { postSignup, postLogin, postChangePassword};
+const Actions = {
+  postSignup, postLogin, postChangePassword,
+  getAllPolls, getMyPolls, savePoll
+};
 export default Actions;
