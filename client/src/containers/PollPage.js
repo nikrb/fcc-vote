@@ -7,7 +7,8 @@ import Auth from '../modules/Auth';
 export default class PollPage extends React.Component {
   state = {
     poll: { options: []},
-    redirectToHome: false
+    redirectToHome: false,
+    message: {colour: "black", text:"Click an option to vote"}
   };
   componentWillMount = () => {
     const poll_name = decodeURIComponent( this.props.match.params.name);
@@ -28,7 +29,11 @@ export default class PollPage extends React.Component {
     }
     Actions.pollVote( this.state.poll.name, text, email)
     .then( (response) => {
-      console.log( "vote response:", response);
+      if( response.success){
+        this.setState( {message: {text:"Vote registered", colour:"black"}});
+      } else {
+        this.setState( {message: {text:response.message, colour: "red"}});
+      }
     });
   };
   render = () => {
@@ -38,7 +43,8 @@ export default class PollPage extends React.Component {
     return (
       <div className="container">
         <h2>Voting Page</h2>
-        <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote} />
+        <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
+          message={this.state.message} />
       </div>
     );
   };
