@@ -12,7 +12,7 @@ export default class PollForm extends React.Component {
   render = () => {
     const {onSubmit, onChange, poll, errors} = this.props;
     const option_list = poll.options.map( (d,i)=>{
-      return <li key={i}>{d.text} ({d.votes})</li>;
+      return <li key={i}>{d.text}</li>;
     });
     return (
       <div className="container" >
