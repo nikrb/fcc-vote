@@ -71,7 +71,7 @@ export default class App extends Component {
             <AuthRoute path="/mypolls" component={MyPollsPage} />
             <AuthRoute path="/editpoll" component={EditPollPage} />
             <AuthRoute path="/settings" component={SettingsPage} />
-            <AuthRoute path="/poll/:name" component={PollPage} />
+            <Route path="/poll/:name" component={PollPage} />
             <Route path="*" render={props => <Redirect to='/' {...props} /> } />
           </Switch>
         </div>
