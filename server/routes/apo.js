@@ -1,3 +1,9 @@
+/**
+ * apo.js
+
+ endpoints not requiring auth
+ 
+ */
 const express = require('express');
 const Poll = require( 'mongoose').model('Poll');
 
