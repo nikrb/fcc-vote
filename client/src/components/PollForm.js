@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ListItem from './ListItem';
 
 export default class PollForm extends React.Component {
   static propTypes = {
@@ -17,7 +18,7 @@ export default class PollForm extends React.Component {
   render = () => {
     const {onSubmit, onChange, poll, errors} = this.props;
     const option_list = poll.options.map( (d,i)=>{
-      return <li key={i}>{d.text}</li>;
+      return <ListItem key={i} onItemClick={this.props.deleteOption} name={d.text} />;
     });
     return (
       <div className="container" >

@@ -1,6 +1,6 @@
 import React from 'react';
-import PollForm from '../components/PollForm';
 import {Redirect} from 'react-router-dom';
+import PollForm from '../components/PollForm';
 import Actions from './Actions';
 
 export default class EditPollPage extends React.Component {
@@ -31,15 +31,18 @@ export default class EditPollPage extends React.Component {
     np.options = nol;
     this.setState( {poll: np});
   };
+  onDeleteOption = (option_text) => {
+    console.log( "option text:", option_text);
+    const new_options = this.state.poll.options.filter( (o) => {
+      return o.text !== option_text;
+    });
+    this.setState( { poll: {...this.state.poll, options: new_options}});
+  };
   onChange = ( e) => {
     const field_name = e.target.name;
     const np = {...this.state.poll};
     if( field_name === "new_option"){
       this.setState( {new_option: e.target.value});
-    } else if( field_name === "add_option"){
-      const no = { text: this.state.new_option, votes: []};
-      const nol = this.state.poll.options.concat( no);
-      np.options = nol;
     } else {
       np[field_name] = e.target.value;
     }
@@ -54,7 +57,8 @@ export default class EditPollPage extends React.Component {
         <h2>Edit Poll</h2>
         <button type="button" style={{color:"red",background:"steelblue"}} >Delete this poll</button>
         <PollForm onChange={this.onChange} poll={this.state.poll} new_option={this.state.new_option}
-          onSubmit={this.processForm} errors={this.state.errors} addButtonClick={this.onAddClick} />
+          onSubmit={this.processForm} errors={this.state.errors} addButtonClick={this.onAddClick}
+          deleteOption={this.onDeleteOption} />
       </div>
     );
   };
