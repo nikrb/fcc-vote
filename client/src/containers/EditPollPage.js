@@ -30,13 +30,12 @@ export default class EditPollPage extends React.Component {
     if( field_name === "new_option"){
       this.setState( {new_option: e.target.value});
     } else if( field_name === "add_option"){
-      const no = { text: this.state.new_option, votes: 0};
+      const no = { text: this.state.new_option, votes: []};
       const nol = this.state.poll.options.concat( no);
       np.options = nol;
     } else {
       np[field_name] = e.target.value;
     }
-    console.log( "poll new state:", np);
     this.setState( {poll: np});
   };
   render = () => {
@@ -46,6 +45,7 @@ export default class EditPollPage extends React.Component {
     return (
       <div className="container">
         <h2>Edit Poll</h2>
+        <button type="button" style={{color:"red",background:"steelblue"}} >Delete this poll</button>
         <PollForm onChange={this.onChange} poll={this.state.poll} new_option={this.state.new_option}
           onSubmit={this.processForm} errors={this.state.errors} />
       </div>
