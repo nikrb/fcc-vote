@@ -1,7 +1,8 @@
+require( 'dotenv').config();
+require( './concatAll.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require( 'passport');
-require( 'dotenv').config();
 require( './models').connect( process.env.dbUri);
 const app = express();
 
