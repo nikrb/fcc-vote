@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import PollVoteForm from '../components/PollVoteForm';
+import PieChart from '../components/charts/Pie';
 import Actions from './Actions';
 import Auth from '../modules/Auth';
 
@@ -40,11 +41,22 @@ export default class PollPage extends React.Component {
     if( this.state.redirectToHome){
       return <Redirect to="/" />
     }
+    const poll_data = this.state.poll.options.map( (option) => {
+      return option.votes.length;
+    });
     return (
       <div className="container">
         <h2>Voting Page</h2>
         <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
           message={this.state.message} />
+
+        <div style={{ height: 200, width: 200 }}>
+          <svg height={200} width={200}>
+            <g transform={'translate( 100, 100 )'}>
+              <PieChart data={poll_data} />
+            </g>
+          </svg>
+        </div>
       </div>
     );
   };
