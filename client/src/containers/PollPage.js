@@ -25,7 +25,6 @@ export default class PollPage extends React.Component {
     }
   };
   onVote = ( text) => {
-    console.log( "vote option:", text);
     let email = null;
     if( Auth.isUserAuthenticated()){
       email = Auth.getEmail();
@@ -41,9 +40,10 @@ export default class PollPage extends React.Component {
   };
   onMouseEnter = ( e, arc) => {
     const nt = {...this.state.tooltip};
-    nt.text = [`votes [${arc.data}]`];
+    const option_text = this.state.poll.options[arc.index].text;
+    nt.text = [option_text, `votes [${arc.data}]`];
     nt.visible = true;
-    // FIXME: position tooltip by cursor
+    // TODO: position tooltip by cursor
     nt.pos = {x:e.clientX, y:e.clientY-100};
     this.setState( {tooltip: nt});
   };
