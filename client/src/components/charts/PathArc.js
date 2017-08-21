@@ -2,8 +2,8 @@ import React from 'react';
 import { arc } from 'd3-shape';
 
 export default class PathArc extends React.Component {
-  onMouseOver = (e) => {
-    this.props.onMouseOver( this.props.arc);
+  onMouseEnter = (e) => {
+    this.props.onMouseEnter( e, this.props.arc);
   };
   render = () => {
     const a = this.props.arc;
@@ -16,7 +16,8 @@ export default class PathArc extends React.Component {
       fill="blue"
       stroke={'white'}
       d={arcGen(a)}
-      onMouseOver={this.onMouseOver} />
+      onMouseEnter={this.onMouseEnter}
+      onMouseLeave={this.props.onMouseLeave} />
     );
   };
 }
