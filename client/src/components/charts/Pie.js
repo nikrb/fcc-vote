@@ -6,7 +6,6 @@ import PathArc from './PathArc';
 export default class Pie extends React.Component {
   render = () => {
     const arcs = pie()( this.props.data);
-    console.log( this.props.data, arcs);
     return (<g>
       { arcs.map((a, i) => {
           return <PathArc key={i} arc={a} onMouseEnter={this.props.onMouseEnter}
