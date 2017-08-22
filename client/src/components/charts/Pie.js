@@ -6,7 +6,9 @@ import PathArc from './PathArc';
 
 export default class Pie extends React.Component {
   render = () => {
-    const arcs = d3.pie()( this.props.data);
+    const arcs = d3.pie()
+      .sort(null)
+      .value(function(d) { return d; }) (this.props.data)
     const colourScale = d3.scaleOrdinal(d3.schemeCategory20);
     return (<g>
       { arcs.map((a, i) => {
