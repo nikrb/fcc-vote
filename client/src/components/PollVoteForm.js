@@ -5,7 +5,8 @@ export default class PollVoteForm extends React.Component {
   render = () => {
     const {poll, message} = this.props;
     const options = poll.options.map( (d,i) => {
-      return <ListItem key={i} onItemClick={this.props.onOptionSelect} name={d.text} />;
+      return <ListItem key={i} onItemClick={this.props.onOptionSelect}
+        style={{color:this.props.colourScale(i)}} name={d.text} />;
     });
     const style = { color: message.colour};
     return (

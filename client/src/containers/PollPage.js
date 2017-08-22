@@ -1,5 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import * as d3 from 'd3';
 import PollVoteForm from '../components/PollVoteForm';
 import PieChart from '../components/charts/Pie';
 import Actions from './Actions';
@@ -56,9 +57,12 @@ export default class PollPage extends React.Component {
     if( this.state.redirectToHome){
       return <Redirect to="/" />
     }
-    const poll_data = this.state.poll.options.map( (option) => {
+    const {options} = this.state.poll;
+    const poll_data = options.map( (option) => {
       return option.votes.length;
     });
+    const colourScale = d3.scaleOrdinal(options.length>10?d3.schemeCategory20:d3.schemeCategory10);
+
     const tooltip = {display: (this.state.tooltip.visible)?"block":"none",
       left: this.state.tooltip.pos.x,
       top: this.state.tooltip.pos.y,
@@ -75,13 +79,13 @@ export default class PollPage extends React.Component {
         <h2>Voting Page</h2>
         <div style={row_first}>
           <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
-            message={this.state.message} />
+            message={this.state.message} colourScale={colourScale} />
           <div  style={{position:"relative",margin:"20px"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>
                 <g transform={'translate( 100, 100 )'}>
                   <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
-                    onMouseEnter={this.onMouseEnter} />
+                    onMouseEnter={this.onMouseEnter} colourScale={colourScale} />
                 </g>
               </svg>
             </div>

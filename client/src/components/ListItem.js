@@ -6,7 +6,7 @@ export default class ListItem extends React.Component {
   };
   render = () => {
     return (
-      <li onClick={this.clicked}>{this.props.name}</li>
+      <li style={this.props.style} onClick={this.clicked}>{this.props.name}</li>
     );
   };
 }
