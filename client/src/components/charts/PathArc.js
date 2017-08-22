@@ -9,7 +9,9 @@ export default class PathArc extends React.Component {
     const a = this.props.arc;
     const arcGen = arc()
       .innerRadius(0)
-      .outerRadius(100);
+      .outerRadius(100)
+      .padAngle(0.03)
+      .cornerRadius(5);
 
     const colour = this.props.colourScale( this.props.arc.index);
 
