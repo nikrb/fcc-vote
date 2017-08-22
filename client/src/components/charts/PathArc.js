@@ -11,9 +11,11 @@ export default class PathArc extends React.Component {
       .innerRadius(0)
       .outerRadius(100);
 
+    const colour = this.props.colourScale( this.props.arc.index);
+
     // const ratio = Math.abs(a.startAngle - a.endAngle) / 2 / Math.PI;
     return (<path
-      fill="blue"
+      fill={colour}
       stroke={'white'}
       d={arcGen(a)}
       onMouseEnter={this.onMouseEnter}
