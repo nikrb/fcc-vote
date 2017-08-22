@@ -6,7 +6,6 @@ export default class PathArc extends React.Component {
     this.props.onMouseEnter( e, this.props.arc);
   };
   render = () => {
-    const a = this.props.arc;
     const arcGen = arc()
       .innerRadius(0)
       .outerRadius(100)
@@ -19,7 +18,7 @@ export default class PathArc extends React.Component {
     return (<path
       fill={colour}
       stroke={'white'}
-      d={arcGen(a)}
+      d={arcGen( this.props.arc)}
       onMouseEnter={this.onMouseEnter}
       onMouseLeave={this.props.onMouseLeave} />
     );
