@@ -12,7 +12,8 @@ export default class PollPage extends React.Component {
     poll: { options: []},
     redirectToHome: false,
     message: {colour: "black", text:"Click an option to vote"},
-    tooltip: { text:[], visible: false, pos: {x:0,y:0}}
+    tooltip: { text:[], visible: false, pos: {x:0,y:0}},
+    highlight_option : -1
   };
   componentWillMount = () => {
     const poll_name = decodeURIComponent( this.props.match.params.name);
@@ -46,12 +47,12 @@ export default class PollPage extends React.Component {
     nt.visible = true;
     // TODO: position tooltip by cursor
     nt.pos = {x:0, y:0}; // e.clientX, y:e.clientY-100};
-    this.setState( {tooltip: nt});
+    this.setState( {tooltip: nt, highlight_option: arc.index});
   };
   onMouseLeave = (e) => {
     const nt = {...this.state.tooltip};
     nt.visible = false;
-    this.setState( {tooltip: nt});
+    this.setState( {tooltip: nt, highlight_option: -1});
   };
   render = () => {
     if( this.state.redirectToHome){
@@ -79,7 +80,8 @@ export default class PollPage extends React.Component {
         <h2>Voting Page</h2>
         <div style={row_first}>
           <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
-            message={this.state.message} colourScale={colourScale} />
+            message={this.state.message} colourScale={colourScale}
+            highlight={this.state.highlight_option} />
           <div  style={{position:"relative",margin:"20px"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>
