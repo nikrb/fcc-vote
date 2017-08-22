@@ -5,8 +5,8 @@ const router = new express.Router();
 
 router.get('/mypolls', (req, res) => {
   let q = {};
-  if( req.query.email){
-    q.email = decodeURIComponent( req.query.email);
+  if( req.query.owner){
+    q.owner = decodeURIComponent( req.query.owner);
   }
   Poll.find( q, function (err, docs){
     res.status(200).json( docs);

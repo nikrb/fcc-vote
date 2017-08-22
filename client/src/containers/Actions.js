@@ -41,8 +41,8 @@ function postChangePassword( payload){
 }
 function getMyPolls( query) {
   let q = "";
-  if( query.email){
-    q = "?email="+encodeURIComponent( query.email);
+  if( query.owner){
+    q = "?owner="+encodeURIComponent( query.owner);
   }
   return fetch( '/api/mypolls'+q, {
     method: 'get',
