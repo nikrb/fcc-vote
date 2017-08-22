@@ -44,7 +44,7 @@ export default class PollPage extends React.Component {
     nt.text = [option_text, `votes [${arc.data}]`];
     nt.visible = true;
     // TODO: position tooltip by cursor
-    nt.pos = {x:e.clientX, y:e.clientY-100};
+    nt.pos = {x:0, y:0}; // e.clientX, y:e.clientY-100};
     this.setState( {tooltip: nt});
   };
   onMouseLeave = (e) => {
@@ -64,21 +64,30 @@ export default class PollPage extends React.Component {
       top: this.state.tooltip.pos.y,
       padding: "10px"
     };
+    const row_first = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+    };
     return (
-      <div className="container" style={{position:"relative"}}>
+      <div className="container">
         <h2>Voting Page</h2>
-        <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
-          message={this.state.message} />
-
-        <div style={{ height: 200, width: 200 }}>
-          <svg height={200} width={200}>
-            <g transform={'translate( 100, 100 )'}>
-              <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
-                onMouseEnter={this.onMouseEnter} />
-            </g>
-          </svg>
+        <div style={row_first}>
+          <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
+            message={this.state.message} />
+          <div  style={{position:"relative",margin:"20px"}}>
+            <div style={{ height: 200, width: 200 }}>
+              <svg height={200} width={200}>
+                <g transform={'translate( 100, 100 )'}>
+                  <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
+                    onMouseEnter={this.onMouseEnter} />
+                </g>
+              </svg>
+            </div>
+            <Tooltip tip_text={this.state.tooltip.text} pos={tooltip} />
+          </div>
         </div>
-        <Tooltip tip_text={this.state.tooltip.text} pos={tooltip} />
       </div>
     );
   };
