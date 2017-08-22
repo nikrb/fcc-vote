@@ -21,8 +21,7 @@ export default class MyPollsPage extends React.Component {
     this.setState( { redirectToEditPollPage: true, poll: {name:"unnamed", options:[]}});
   };
   onPollClick = ( name) => {
-    // TODO: will this reduce to filter( p.name === e.target.name)?
-    const ep = this.state.list.filter( (p) => { return p.name === name;});
+    const ep = this.state.list.filter( p => p.name === name);
     if( ep.length === 0){
       console.error( `Find poll [${name}] failed`);
     } else {
