@@ -25,13 +25,13 @@ export default class PollForm extends React.Component {
         <form action="/" onSubmit={onSubmit} >
           <h2>New Poll</h2>
           {errors.summary && <p className="error-message">{errors.summary}</p>}
-          <label>Name
+          <div>Name
             <div className="error-wrap">
               {errors.name && <p className="error-field">{errors.name}</p>}
               <input type="text" name="name" value={poll.name} onChange={onChange} />
             </div>
-          </label>
-          <div style={{marginBottom:"10px"}}>
+          </div>
+          <div style={{margin:"10px auto"}}>
             Options <span style={{fontSize:"8px"}}>(Click option to delete)</span>
           </div>
           <div>
