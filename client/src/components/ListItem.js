@@ -5,7 +5,9 @@ export default class ListItem extends React.Component {
     this.props.onItemClick( this.props.name);
   };
   onMouseEnter = (e) => {
-    this.props.onMouseEnter( e, this.props.name);
+    if( this.props.onMouseEnter){
+      this.props.onMouseEnter( e, this.props.name);
+    }
   };
   render = () => {
     return (
