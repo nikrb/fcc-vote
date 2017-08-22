@@ -40,6 +40,13 @@ export default class PollPage extends React.Component {
       }
     });
   };
+  onMouseEnterOption = (e, name) => {
+    const ndx = this.state.poll.options.findIndex( (opt) => {
+      if( opt.text === name) return true;
+      return false;
+    });
+    this.setState( {highlight_option: ndx});
+  };
   onMouseEnter = ( e, arc) => {
     const nt = {...this.state.tooltip};
     const option_text = this.state.poll.options[arc.index].text;
@@ -81,13 +88,16 @@ export default class PollPage extends React.Component {
         <div style={row_first}>
           <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
             message={this.state.message} colourScale={colourScale}
-            highlight={this.state.highlight_option} />
+            highlight={this.state.highlight_option}
+            onMouseEnterOption={this.onMouseEnterOption}
+            onMouseLeave={this.onMouseLeave} />
           <div  style={{position:"relative",margin:"20px"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>
                 <g transform={'translate( 100, 100 )'}>
                   <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
-                    onMouseEnter={this.onMouseEnter} colourScale={colourScale} />
+                    onMouseEnter={this.onMouseEnter} colourScale={colourScale}
+                    highlight={this.state.highlight_option} />
                 </g>
               </svg>
             </div>

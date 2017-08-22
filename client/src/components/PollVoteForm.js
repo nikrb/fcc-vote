@@ -11,7 +11,8 @@ export default class PollVoteForm extends React.Component {
         style = {...style, border: `2px solid darkgrey`, borderRadius:"4px"};
       }
       return <ListItem key={i} onItemClick={this.props.onOptionSelect}
-        style={style} name={d.text} />;
+        style={style} name={d.text} onMouseEnter={this.props.onMouseEnterOption}
+        onMouseLeave={this.props.onMouseLeave} />;
     });
     const style = { color: message.colour};
     return (

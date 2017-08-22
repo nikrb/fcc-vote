@@ -12,7 +12,8 @@ export default class Pie extends React.Component {
     return (<g>
       { arcs.map((a, i) => {
           return <PathArc key={i} arc={a} onMouseEnter={this.props.onMouseEnter}
-            onMouseLeave={this.props.onMouseLeave} colourScale={this.props.colourScale} />;
+            onMouseLeave={this.props.onMouseLeave} colourScale={this.props.colourScale}
+            highlight={this.props.highlight} />;
         })
       }
       </g>
