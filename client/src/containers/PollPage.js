@@ -18,13 +18,16 @@ export default class PollPage extends React.Component {
   componentWillMount = () => {
     const poll_name = decodeURIComponent( this.props.match.params.name);
     if( poll_name){
-      Actions.getPoll( poll_name)
-      .then( (response) => {
-        this.setState( { poll: response});
-      })
+      this.getPoll( poll_name);
     } else {
       this.setState( { redirectToHome: "/"});
     }
+  };
+  getPoll = ( poll_name) => {
+      Actions.getPoll( poll_name)
+      .then( (response) => {
+        this.setState( { poll: response});
+      });
   };
   onVote = ( text) => {
     let email = null;
@@ -34,6 +37,7 @@ export default class PollPage extends React.Component {
     Actions.pollVote( this.state.poll.name, text, email)
     .then( (response) => {
       if( response.success){
+        this.getPoll( this.state.poll.name);
         this.setState( {message: {text:"Vote registered", colour:"black"}});
       } else {
         this.setState( {message: {text:response.message, colour: "red"}});
