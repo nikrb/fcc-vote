@@ -11,24 +11,18 @@ export default class LoginForm extends React.Component {
   };
   render = () => {
     const {onSubmit,onChange,user,errors} = this.props;
-    const style = {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center"
-    };
     // TODO: show signup success
     return (
       <div className="container" >
         <h2>Login</h2>
         <form action="/" onSubmit={onSubmit} >
           {errors.summary && <p className="error-message">{errors.summary}</p>}
-          <div style={style}>Email
+          <div className="form-row">Email
             <input type="text" name="email"
               value={user.email} onChange={onChange} />
             {errors.email && <p className="error-message">{errors.email}</p>}
           </div>
-          <div style={style}>Password&nbsp;
+          <div className="form-row">Password&nbsp;
             <input type="password" name="password"
               value={user.password} onChange={onChange} />
             {errors.password && <p className="error-message">{errors.password}</p>}

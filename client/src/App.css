@@ -75,6 +75,13 @@ input:focus {
   align-items: center;
 }
 
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .error-message {
   color: tomato;
 }
