@@ -32,5 +32,10 @@ router.post( '/poll', (req, res) => {
     });
   });
 });
+router.post( '/depoll', (req, res) => {
+  Poll.remove( { _id: req.body.id}, function( err){
+    res.json( { results: "ok", error: err});
+  })
+});
 
 module.exports = router;

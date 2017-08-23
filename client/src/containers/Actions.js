@@ -80,6 +80,20 @@ function savePoll( poll){
   .then( checkStatus)
   .then( parseJSON);
 }
+function deletePoll( id){
+  const payload = { id: id};
+  return fetch( '/api/depoll', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `bearer ${Auth.getToken()}`
+    },
+    body: JSON.stringify( payload)
+  })
+  .then( checkStatus)
+  .then( parseJSON);
+}
 function pollVote( poll_name, text, email){
   const payload = { name: poll_name, vote: text, email: email};
   return fetch( '/apo/vote', {
@@ -111,6 +125,6 @@ function parseJSON(response) {
 
 const Actions = {
   postSignup, postLogin, postChangePassword,
-  getAllPolls, getMyPolls, getPoll, savePoll, pollVote
+  getAllPolls, getMyPolls, getPoll, savePoll, deletePoll, pollVote
 };
 export default Actions;

@@ -48,6 +48,14 @@ export default class EditPollPage extends React.Component {
     }
     this.setState( {poll: np});
   };
+  deletePoll = (e) => {
+    Actions.deletePoll( this.state.poll._id )
+    .then( (response) => {
+      console.log( "delete poll response:");
+      console.log( response);
+      this.setState( {redirectToList: true});
+    });
+  };
   render = () => {
     if( this.state.redirectToList){
       return <Redirect to="/mypolls" />
@@ -55,7 +63,10 @@ export default class EditPollPage extends React.Component {
     return (
       <div className="container">
         <h2>Edit Poll</h2>
-        <button type="button" style={{color:"red",background:"steelblue"}} >Delete this poll</button>
+        <button type="button" style={{color:"red",background:"steelblue"}}
+          onClick={this.deletePoll}>
+          Delete this poll
+        </button>
         <PollForm onChange={this.onChange} poll={this.state.poll} new_option={this.state.new_option}
           onSubmit={this.processForm} errors={this.state.errors} addButtonClick={this.onAddClick}
           deleteOption={this.onDeleteOption} />
