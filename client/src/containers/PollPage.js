@@ -53,8 +53,8 @@ export default class PollPage extends React.Component {
   };
   onMouseEnter = ( e, arc) => {
     const nt = {...this.state.tooltip};
-    const option_text = this.state.poll.options[arc.index].text;
-    nt.text = [option_text, `votes [${arc.data}]`];
+    const option_text = arc.data.label;
+    nt.text = [option_text, `votes [${arc.data.value}]`];
     nt.visible = true;
     // TODO: position tooltip by cursor
     nt.pos = {x:0, y:0}; // e.clientX, y:e.clientY-100};
@@ -71,7 +71,7 @@ export default class PollPage extends React.Component {
     }
     const {options} = this.state.poll;
     const poll_data = options.map( (option) => {
-      return option.votes.length;
+      return { value: option.votes.length, label: option.text};
     });
     const colourScale = d3.scaleOrdinal(options.length>10?d3.schemeCategory20:d3.schemeCategory10);
 

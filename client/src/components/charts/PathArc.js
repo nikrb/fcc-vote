@@ -14,14 +14,30 @@ export default class PathArc extends React.Component {
 
     const colour = this.props.colourScale( this.props.arc.index);
     const stroke_colour = this.props.highlight===this.props.arc.index?"darkgrey":"white";
+    const label_style = {
+      fontSize: "12px",
+
+    };
+    const t = arcGen( this.props.arc);
+    console.log( this.props.arc, t);
+    const a = this.props.arc;
+    const tang = a.startAngle + Math.abs(a.endAngle-a.startAngle)/2;
+    console.log( "text angle:", tang);
+    const text_transform = "rotate( "+a.startAngle*180/Math.PI+")";
     // const ratio = Math.abs(a.startAngle - a.endAngle) / 2 / Math.PI;
-    return (<path
-      fill={colour}
-      stroke={stroke_colour}
-      strokeWidth={2}
-      d={arcGen( this.props.arc)}
-      onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.props.onMouseLeave} />
+    return (
+      <g>
+        <path
+          fill={colour}
+          stroke={stroke_colour}
+          strokeWidth={2}
+          d={arcGen( this.props.arc)}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.props.onMouseLeave} />
+        <text style={label_style} transform={text_transform}>
+          {this.props.arc.data.label}
+        </text>
+      </g>
     );
   };
 }
