@@ -15,6 +15,7 @@ export default class PollForm extends React.Component {
     this.option_field.focus();
     this.option_field.select();
   };
+  grabNewOptionField = (input) => { this.option_field = input;}
   render = () => {
     const {onSubmit, onChange, poll, errors} = this.props;
     const option_list = poll.options.map( (d,i)=>{
@@ -38,7 +39,7 @@ export default class PollForm extends React.Component {
             {option_list}
             <input type="text" name="new_option" placeholder="new option"
               value={this.props.new_option} onChange={onChange}
-              ref={(input) => { this.option_field = input;}} />
+              ref={this.grabNewOptionField} />
             <button type="button" onClick={this.onAddClick} >+</button>
           </div>
           <div style={{fontSize:"8px"}}>Enter option text and hit tab, then space</div>
