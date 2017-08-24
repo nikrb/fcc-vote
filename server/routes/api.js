@@ -27,8 +27,9 @@ router.post( '/poll', (req, res) => {
     p.save( (err) => {
       if( err) {
         res.json( { success: false, error: err});
+      } else {
+        res.json( { success: true});
       }
-      res.json( { success: true});
     });
   });
 });
