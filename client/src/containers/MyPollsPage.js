@@ -28,6 +28,21 @@ export default class MyPollsPage extends React.Component {
       this.setState( { redirectToEditPollPage: true, poll: ep[0]});
     }
   };
+  onDeleteClick = (e) => {
+    console.log( "delete poll:", e.target.name);
+    const poll = this.state.list.find( (p) => { return p.name === e.target.name});
+    if( poll && poll._id){
+      Actions.deletePoll( poll._id)
+      .then( (response) => {
+        console.log( "poll delete response:", response);
+      })
+      .catch( (err) => {
+        console.error( "poll delete failed:", err);
+      });
+    } else {
+      console.error( "find poll failed:", e.target.name);
+    }
+  };
   render = () => {
     if( this.state.redirectToEditPollPage){
       return <Redirect to={{
@@ -39,7 +54,8 @@ export default class MyPollsPage extends React.Component {
       <div className="container">
         <h1>My Polls</h1>
         <button onClick={this.createPoll}>New Poll</button>
-        <PollList data={this.state.list} onPollClick={this.onPollClick}/>
+        <PollList data={this.state.list} onPollClick={this.onPollClick}
+          onDeleteClick={this.onDeleteClick} deleteable={true}/>
       </div>
     );
   };
