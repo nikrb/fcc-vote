@@ -52,15 +52,15 @@ export default class PollPage extends React.Component {
     });
     this.setState( {highlight_option: ndx});
   };
+  // position cursor inside parent div
+  grabPieParentRef = (input) => { this.pie_parent = input; }
   // hover over pie chart segment
   onMouseEnter = ( e, arc) => {
     const box = this.pie_parent.getBoundingClientRect();
-    console.log( `client x[${e.clientX}] y[${e.clientY}] parent box:`, box);
     const nt = {...this.state.tooltip};
     const option_text = arc.data.label;
     nt.text = [option_text, `votes [${arc.data.value}]`];
     nt.visible = true;
-    // TODO: position tooltip by cursor
     nt.pos = {x: e.clientX - box.left, y: e.clientY - box.top};
     this.setState( {tooltip: nt, highlight_option: arc.index});
   };
@@ -69,7 +69,6 @@ export default class PollPage extends React.Component {
     nt.visible = false;
     this.setState( {tooltip: nt, highlight_option: -1});
   };
-  grabPieParentRef = (input) => { this.pie_parent = input; }
   render = () => {
     if( this.state.redirectToHome){
       return <Redirect to="/" />
