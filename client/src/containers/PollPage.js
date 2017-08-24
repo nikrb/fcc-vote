@@ -87,8 +87,9 @@ export default class PollPage extends React.Component {
     const row_first = {
       display: "flex",
       flexDirection: "row",
+      justifyContent: "center",
       flexWrap: "wrap",
-      alignItems: "center",
+      alignItems: "center"
     };
     return (
       <div className="container">
@@ -99,7 +100,7 @@ export default class PollPage extends React.Component {
             highlight={this.state.highlight_option}
             onMouseEnterOption={this.onMouseEnterOption}
             onMouseLeave={this.onMouseLeave} />
-          <div ref={this.grabPieParentRef} style={{position:"relative",margin:"20px"}}>
+          <div ref={this.grabPieParentRef} style={{position:"relative"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>
                 <g transform={'translate( 100, 100 )'}>
