@@ -12,19 +12,27 @@ export default class PathArc extends React.Component {
       // .padAngle(0.03)
       .cornerRadius(5);
 
-    const colour = this.props.colourScale( this.props.arc.index);
+    const a = this.props.arc;
+    const colour = this.props.colourScale( a.index);
     const stroke_colour = this.props.highlight===this.props.arc.index?"darkgrey":"white";
     const label_style = {
-      fontSize: "12px",
-
+      fontSize: "14px"
     };
-    const t = arcGen( this.props.arc);
-    console.log( this.props.arc, t);
-    const a = this.props.arc;
-    const tang = a.startAngle + Math.abs(a.endAngle-a.startAngle)/2;
-    console.log( "text angle:", tang);
-    const text_transform = "rotate( "+a.startAngle*180/Math.PI+")";
-    // const ratio = Math.abs(a.startAngle - a.endAngle) / 2 / Math.PI;
+    const da = (a.endAngle-a.startAngle)/2;
+    let ptx1 = 20*Math.cos( a.startAngle-Math.PI/2 + da);
+    let ptx2 = 90*Math.cos( a.startAngle-Math.PI/2 + da);
+    let pty1 = 20*Math.sin( a.startAngle-Math.PI/2 + da);
+    let pty2 = 90*Math.sin( a.startAngle-Math.PI/2 + da);
+    if( a.startAngle > Math.PI-Math.PI/18){
+      let t = ptx1;
+      ptx1 = ptx2;
+      ptx2 = t;
+      t = pty1;
+      pty1 = pty2;
+      pty2 = t;
+    }
+    const path_text = `M${ptx1},${pty1} L${ptx2},${pty2}`;
+    const path_id = "apath"+a.index;
     return (
       <g>
         <path
@@ -34,8 +42,13 @@ export default class PathArc extends React.Component {
           d={arcGen( this.props.arc)}
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave} />
-        <text style={label_style} transform={text_transform}>
-          {this.props.arc.data.label}
+        <defs>
+          <path id={path_id} d={path_text} />
+        </defs>
+        <text style={label_style} >
+          <textPath d={path_text} xlinkHref={"#"+path_id} >
+            {this.props.arc.data.label}
+          </textPath>
         </text>
       </g>
     );
