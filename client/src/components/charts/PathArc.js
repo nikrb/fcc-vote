@@ -19,20 +19,18 @@ export default class PathArc extends React.Component {
       fontSize: "14px"
     };
     const da = (a.endAngle-a.startAngle)/2;
-    let ptx1 = 20*Math.cos( a.startAngle-Math.PI/2 + da);
-    let ptx2 = 90*Math.cos( a.startAngle-Math.PI/2 + da);
-    let pty1 = 20*Math.sin( a.startAngle-Math.PI/2 + da);
-    let pty2 = 90*Math.sin( a.startAngle-Math.PI/2 + da);
+    let ptx = 90*Math.cos( a.startAngle-Math.PI/2 + da);
+    let pty = 90*Math.sin( a.startAngle-Math.PI/2 + da);
+    let text_anchor;
+    let tang;
     if( a.startAngle + da > Math.PI){
-      let t = ptx1;
-      ptx1 = ptx2;
-      ptx2 = t;
-      t = pty1;
-      pty1 = pty2;
-      pty2 = t;
+      tang = (a.startAngle-Math.PI/2 + da - Math.PI) * 180/Math.PI;
+      text_anchor = "start";
+    } else {
+      tang = (a.startAngle-Math.PI/2 + da) * 180/Math.PI;
+      text_anchor = "end";
     }
-    const path_text = `M${ptx1},${pty1} L${ptx2},${pty2}`;
-    const path_id = "apath"+a.index;
+    const transform = `translate( ${ptx},${pty})rotate( ${tang})`;
     return (
       <g>
         <path
@@ -42,13 +40,9 @@ export default class PathArc extends React.Component {
           d={arcGen( this.props.arc)}
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave} />
-        <defs>
-          <path id={path_id} d={path_text} />
-        </defs>
-        <text style={label_style} dy="0.35em">
-          <textPath d={path_text} xlinkHref={"#"+path_id} >
-            {this.props.arc.data.label}
-          </textPath>
+        <text style={label_style} dy="0.35em"
+                          transform={transform} textAnchor={text_anchor}>
+          {this.props.arc.data.label}
         </text>
       </g>
     );
