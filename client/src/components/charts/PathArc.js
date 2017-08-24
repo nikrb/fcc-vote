@@ -16,7 +16,8 @@ export default class PathArc extends React.Component {
     const colour = this.props.colourScale( a.index);
     const stroke_colour = this.props.highlight===this.props.arc.index?"darkgrey":"white";
     const label_style = {
-      fontSize: "14px"
+      fontSize: "14px",
+      pointerEvents: "none"
     };
     const da = (a.endAngle-a.startAngle)/2;
     let ptx = 90*Math.cos( a.startAngle-Math.PI/2 + da);
