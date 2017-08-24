@@ -44,6 +44,7 @@ export default class PollPage extends React.Component {
       }
     });
   };
+  // hover over text list item option
   onMouseEnterOption = (e, name) => {
     const ndx = this.state.poll.options.findIndex( (opt) => {
       if( opt.text === name) return true;
@@ -51,13 +52,16 @@ export default class PollPage extends React.Component {
     });
     this.setState( {highlight_option: ndx});
   };
+  // hover over pie chart segment
   onMouseEnter = ( e, arc) => {
+    const box = this.pie_parent.getBoundingClientRect();
+    console.log( `client x[${e.clientX}] y[${e.clientY}] parent box:`, box);
     const nt = {...this.state.tooltip};
     const option_text = arc.data.label;
     nt.text = [option_text, `votes [${arc.data.value}]`];
     nt.visible = true;
     // TODO: position tooltip by cursor
-    nt.pos = {x:0, y:0}; // e.clientX, y:e.clientY-100};
+    nt.pos = {x: e.clientX - box.left, y: e.clientY - box.top};
     this.setState( {tooltip: nt, highlight_option: arc.index});
   };
   onMouseLeave = (e) => {
@@ -65,6 +69,7 @@ export default class PollPage extends React.Component {
     nt.visible = false;
     this.setState( {tooltip: nt, highlight_option: -1});
   };
+  grabPieParentRef = (input) => { this.pie_parent = input; }
   render = () => {
     if( this.state.redirectToHome){
       return <Redirect to="/" />
@@ -95,7 +100,7 @@ export default class PollPage extends React.Component {
             highlight={this.state.highlight_option}
             onMouseEnterOption={this.onMouseEnterOption}
             onMouseLeave={this.onMouseLeave} />
-          <div  style={{position:"relative",margin:"20px"}}>
+          <div ref={this.grabPieParentRef} style={{position:"relative",margin:"20px"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>
                 <g transform={'translate( 100, 100 )'}>
