@@ -11,7 +11,7 @@ export default class PollPage extends React.Component {
   state = {
     poll: { options: []},
     redirectToHome: false,
-    message: {colour: "black", text:"Click an option to vote"},
+    message: {colour: "black", text:"Select an option and vote!"},
     tooltip: { text:[], visible: false, pos: {x:0,y:0}},
     highlight_option : -1
   };
