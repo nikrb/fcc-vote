@@ -94,7 +94,7 @@ export default class PollPage extends React.Component {
       <div className="container">
         <h2>Voting Page</h2>
         <div style={row_first}>
-          <PollVoteForm poll={this.state.poll} onOptionSelect={this.onVote}
+          <PollVoteForm poll={this.state.poll} onVoteSubmit={this.onVote}
             message={this.state.message} colourScale={colourScale}
             highlight={this.state.highlight_option}
             onMouseEnterOption={this.onMouseEnterOption}
