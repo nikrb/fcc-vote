@@ -23,7 +23,7 @@ export default class PathArc extends React.Component {
     let ptx2 = 90*Math.cos( a.startAngle-Math.PI/2 + da);
     let pty1 = 20*Math.sin( a.startAngle-Math.PI/2 + da);
     let pty2 = 90*Math.sin( a.startAngle-Math.PI/2 + da);
-    if( a.startAngle > Math.PI-Math.PI/18){
+    if( a.startAngle + da > Math.PI){
       let t = ptx1;
       ptx1 = ptx2;
       ptx2 = t;
@@ -45,7 +45,7 @@ export default class PathArc extends React.Component {
         <defs>
           <path id={path_id} d={path_text} />
         </defs>
-        <text style={label_style} >
+        <text style={label_style} dy="0.35em">
           <textPath d={path_text} xlinkHref={"#"+path_id} >
             {this.props.arc.data.label}
           </textPath>
