@@ -44,6 +44,16 @@ export default class PollPage extends React.Component {
       }
     });
   };
+  onAddOption = (new_option_text) => {
+    const {poll} = this.state;
+    const no = [...poll.options, {text: new_option_text, votes: []}];
+    this.setState( {poll: {...poll, options: no}}, () => {
+      Actions.savePoll( this.state.poll)
+      .then( (response) => {
+        console.log( "save poll (options) response:", response);
+      });
+    });
+  };
   // hover over text list item option
   onMouseEnterOption = (e, name) => {
     const ndx = this.state.poll.options.findIndex( (opt) => {
@@ -99,7 +109,8 @@ export default class PollPage extends React.Component {
             message={this.state.message} colourScale={colourScale}
             highlight={this.state.highlight_option}
             onMouseEnterOption={this.onMouseEnterOption}
-            onMouseLeave={this.onMouseLeave} />
+            onMouseLeave={this.onMouseLeave}
+            onAddOption={this.onAddOption} />
           <div ref={this.grabPieParentRef} style={{position:"relative"}}>
             <div style={{ height: 200, width: 200 }}>
               <svg height={200} width={200}>

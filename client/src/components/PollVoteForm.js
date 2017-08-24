@@ -1,10 +1,13 @@
 import React from 'react';
 import RadioItem from './RadioItem';
+import OptionInput from './OptionInput';
 
 export default class PollVoteForm extends React.Component {
   state = {
     enabled: false,
-    selected_option: null
+    selected_option: null,
+    show_add_option: false,
+    new_option_text: ""
   };
   onChangeOption = (e) => {
     console.log( "option changed:", e.target.value);
@@ -12,6 +15,18 @@ export default class PollVoteForm extends React.Component {
   };
   onSubmit = (e) => {
     this.props.onVoteSubmit( this.state.selected_option);
+  };
+  onNewOptionChange = (e) => {
+    this.setState( {new_option_text: e.target.value});
+  };
+  onShowAddOption = () => {
+    this.setState( { show_add_option: true});
+  };
+  onAddOption = (e) => {
+    this.props.onAddOption( this.state.new_option_text);
+  };
+  onAddOptionDone = () => {
+    this.setState( {new_option_text: "", show_add_option: false});
   };
   render = () => {
     const {poll, message, highlight, colourScale} = this.props;
@@ -21,9 +36,6 @@ export default class PollVoteForm extends React.Component {
       if( highlight === i){
         style = {...style, border: `2px solid darkgrey`, borderRadius:"4px"};
       }
-      // return <ListItem key={i} onItemClick={this.props.onOptionSelect}
-      //   style={style} name={d.text} onMouseEnter={this.props.onMouseEnterOption}
-      //   onMouseLeave={this.props.onMouseLeave} />;
       return (
         <RadioItem key={i} style={style} name="vote_options" value={d.text}
           selected={d.text === this.state.selected_option}
@@ -33,15 +45,32 @@ export default class PollVoteForm extends React.Component {
       );
     });
     const style = { color: message.colour};
+    const add_style = {
+      fontSize: "0.8em"
+    };
     return (
       <div className="container" >
-        <div style={style}>{message.text}</div>
+        <div style={style}>
+          {message.text}
+          {this.state.show_add_option?
+            ""
+            :<button type="button" style={add_style} onClick={this.onShowAddOption}>Add Option</button>
+          }
+
+        </div>
         <h2>{poll.name}</h2>
         <div>
           {options}
-          <button type="button" disabled={!this.state.enabled} onClick={this.onSubmit} >
-            Vote!
-          </button>
+          {this.state.show_add_option?
+            <div>
+              <OptionInput value={this.state.new_option_text} onChange={this.onNewOptionChange}
+                onOptionAdd={this.onAddOption} />
+              <button type="button" onClick={this.onAddOptionDone} >Done</button>
+            </div>
+            :<button type="button" disabled={!this.state.enabled} onClick={this.onSubmit} >
+              Vote!
+            </button>
+          }
         </div>
       </div>
     );
