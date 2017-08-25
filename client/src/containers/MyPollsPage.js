@@ -13,7 +13,6 @@ export default class MyPollsPage extends React.Component {
   componentWillMount = () => {
     Actions.getMyPolls( {owner: Auth.getEmail()})
     .then( (response) => {
-      console.log( response);
       this.setState( { list: response});
     });
   };
