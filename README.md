@@ -12,6 +12,8 @@ fcc project voting app
 
 # setup
 
+You can use yarn instead of npm, to install `npm install -g yarn`.
+
 ### install mongo
 unixy:
 ```sudo apt-get install mongodb-org```
@@ -29,13 +31,13 @@ jwtSecret=somesecretphrase
 
 ## production (cloud9)
 1. clone repo
+3. npm install (top level and client dirs)
 2. create .env file, e.g.
 ```
 dbUri=mongodb://localhost:27017/vote
 jwtSecret=somesecretphrase
 NODE_ENV=production
 ```
-3. npm install (top level and client dirs)
 4. cd client && npm run build
 5. cd ..
 6. start mongo
