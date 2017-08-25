@@ -106,7 +106,7 @@ export default class PollPage extends React.Component {
       flexWrap: "wrap",
       alignItems: "center"
     };
-    const pie_box = { width: "200", height: "200"};
+    const pie_box = { width: "300", height: "300"};
     const pie_box_style = { width: pie_box.width+"px", height: pie_box.height+"px"};
     return (
       <div className="container">

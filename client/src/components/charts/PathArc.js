@@ -20,9 +20,10 @@ export default class PathArc extends React.Component {
   };
   grabSegmentText = ele => this.segment_text = ele;
   render = () => {
+    const box_width = this.props.box.width;
     const arcGen = arc()
       .innerRadius(0)
-      .outerRadius(95)
+      .outerRadius( box_width/2*0.95)
       // .padAngle(0.03)
       .cornerRadius(5);
 
@@ -35,8 +36,8 @@ export default class PathArc extends React.Component {
     };
     const label_offset = (this.state.font_size * 0.35).toFixed(2) + "em";
     const da = (a.endAngle-a.startAngle)/2;
-    let ptx = 90*Math.cos( a.startAngle-Math.PI/2 + da);
-    let pty = 90*Math.sin( a.startAngle-Math.PI/2 + da);
+    let ptx = box_width/2*0.9*Math.cos( a.startAngle-Math.PI/2 + da);
+    let pty = box_width/2*0.9*Math.sin( a.startAngle-Math.PI/2 + da);
     let text_anchor;
     let tang;
     if( a.startAngle + da > Math.PI){
