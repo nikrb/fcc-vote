@@ -30,11 +30,13 @@ export default class PollPage extends React.Component {
       });
   };
   onVote = ( text) => {
+    const {name,owner} = this.state.poll;
     let email = null;
     if( Auth.isUserAuthenticated()){
       email = Auth.getEmail();
     }
-    Actions.pollVote( this.state.poll.name, text, email)
+    this.setState( {message: {text:"Vote submitted ...", colour:"black"}});
+    Actions.pollVote( name, owner, text, email)
     .then( (response) => {
       if( response.success){
         this.getPoll( this.state.poll.name);
@@ -42,6 +44,9 @@ export default class PollPage extends React.Component {
       } else {
         this.setState( {message: {text:response.message, colour: "red"}});
       }
+    })
+    .catch( (err) => {
+      console.error( "vote failed:", err);
     });
   };
   onAddOption = (new_option_text) => {
