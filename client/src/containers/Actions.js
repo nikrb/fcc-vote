@@ -66,7 +66,11 @@ function getPoll( poll_name){
     .then( parseJSON);
 }
 function savePoll( poll){
-  const payload = { ...poll, owner: Auth.getEmail()};
+  let owner = Auth.getEmail();
+  // user may not be owner, if they are logged in and are adding a new option
+  if( poll.owner) owner = poll.owner;
+  // TODO: shorthand, just owner
+  const payload = { ...poll, owner: owner};
   console.log( "savePoll payload:", payload);
   return fetch( '/api/poll', {
     method: 'post',
@@ -94,8 +98,8 @@ function deletePoll( id){
   .then( checkStatus)
   .then( parseJSON);
 }
-function pollVote( poll_name, text, email){
-  const payload = { name: poll_name, vote: text, email: email};
+function pollVote( poll_name, poll_owner, text, email){
+  const payload = { name: poll_name, owner:poll_owner, vote: text, email: email};
   return fetch( '/apo/vote', {
     method: 'post',
     headers: {
