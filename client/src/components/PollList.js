@@ -47,7 +47,7 @@ export default class PollList extends React.Component {
       );
     });
     return (
-      <ul>
+      <ul style={{padding:0}}>
         {rows}
       </ul>
     );
