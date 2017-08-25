@@ -8,8 +8,9 @@ export default class PathArc extends React.Component {
   componentDidMount = () => {
     const {width} = this.props.box;
     const bbox = this.segment_text.getBBox();
-    if( bbox.width > width/2){
-      const r = (width*0.8)/2/bbox.width;
+    const padded_width = width*0.8;
+    if( bbox.width > padded_width/2){
+      const r = padded_width/2/bbox.width;
       if( r < 1){
         this.setState( {font_size: r.toFixed(1)});
       }
