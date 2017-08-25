@@ -6,6 +6,7 @@ export default class PollVoteForm extends React.Component {
   state = {
     enabled: false,
     selected_option: null,
+    add_option_enabled: true,
     show_add_option: false,
     new_option_text: ""
   };
@@ -15,6 +16,7 @@ export default class PollVoteForm extends React.Component {
   };
   onSubmit = (e) => {
     this.props.onVoteSubmit( this.state.selected_option);
+    this.setState( {add_option_enabled: false});
   };
   onNewOptionChange = (e) => {
     this.setState( {new_option_text: e.target.value});
@@ -52,9 +54,11 @@ export default class PollVoteForm extends React.Component {
       <div className="container" >
         <div style={style}>
           {message.text}
-          {this.state.show_add_option?
-            ""
-            :<button type="button" style={add_style} onClick={this.onShowAddOption}>Add Option</button>
+          {this.state.show_add_option || !this.state.add_option_enabled?
+              ""
+            : <button type="button" style={add_style} onClick={this.onShowAddOption}>
+                Add Option
+              </button>
           }
 
         </div>
