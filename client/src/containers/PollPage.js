@@ -99,6 +99,7 @@ export default class PollPage extends React.Component {
       top: this.state.tooltip.pos.y,
       padding: "10px"
     };
+    const user_authed = Auth.isUserAuthenticated();
     const row_first = {
       display: "flex",
       flexDirection: "row",
@@ -117,6 +118,7 @@ export default class PollPage extends React.Component {
             highlight={this.state.highlight_option}
             onMouseEnterOption={this.onMouseEnterOption}
             onMouseLeave={this.onMouseLeave}
+            allowAddOption={user_authed}
             onAddOption={this.onAddOption} />
           <div ref={this.grabPieParentRef} style={{position:"relative"}}>
             <div style={pie_box_style}>
