@@ -36,7 +36,9 @@ export default class PollForm extends React.Component {
             Options <span style={{fontSize:"8px"}}>(Click option to delete)</span>
           </div>
           <div>
-            {option_list}
+            <ul>
+              {option_list}
+            </ul>
             <input type="text" name="new_option" placeholder="new option"
               value={this.props.new_option} onChange={onChange}
               ref={this.grabNewOptionField} />
