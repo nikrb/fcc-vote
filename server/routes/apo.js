@@ -2,7 +2,7 @@
  * apo.js
 
  endpoints not requiring auth
- 
+
  */
 const express = require('express');
 const Poll = require( 'mongoose').model('Poll');
@@ -34,7 +34,8 @@ router.get('/poll', (req, res) => {
 });
 
 router.post( '/vote', (req, res) => {
-  Poll.findOne( {name: req.body.name, "options.text": req.body.vote})
+  // TODO: do we need the options.text in the query?
+  Poll.findOne( {owner: req.body.owner, name: req.body.name})// , "options.text": req.body.vote})
   .then( ( poll)=> {
     if( poll){
       let voter;
@@ -65,8 +66,9 @@ router.post( '/vote', (req, res) => {
           poll.save( (err) => {
             if( err) {
               res.json( { success: false, error: err});
+            } else {
+              res.json( { success: true});
             }
-            res.json( { success: true});
           });
         }
       }
