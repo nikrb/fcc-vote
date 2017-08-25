@@ -2,9 +2,23 @@ import React from 'react';
 import { arc } from 'd3-shape';
 
 export default class PathArc extends React.Component {
+  state = {
+    font_size: "1"
+  };
+  componentDidMount = () => {
+    const {width} = this.props.box;
+    const bbox = this.segment_text.getBBox();
+    if( bbox.width > width/2){
+      const r = (width*0.8)/2/bbox.width;
+      if( r < 1){
+        this.setState( {font_size: r.toFixed(1)});
+      }
+    }
+  };
   onMouseEnter = (e) => {
     this.props.onMouseEnter( e, this.props.arc);
   };
+  grabSegmentText = ele => this.segment_text = ele;
   render = () => {
     const arcGen = arc()
       .innerRadius(0)
@@ -16,9 +30,10 @@ export default class PathArc extends React.Component {
     const colour = this.props.colourScale( a.index);
     const stroke_colour = this.props.highlight===this.props.arc.index?"darkgrey":"white";
     const label_style = {
-      fontSize: "14px",
+      fontSize: this.state.font_size+"em",
       pointerEvents: "none"
     };
+    const label_offset = (this.state.font_size * 0.35).toFixed(2) + "em";
     const da = (a.endAngle-a.startAngle)/2;
     let ptx = 90*Math.cos( a.startAngle-Math.PI/2 + da);
     let pty = 90*Math.sin( a.startAngle-Math.PI/2 + da);
@@ -41,7 +56,7 @@ export default class PathArc extends React.Component {
           d={arcGen( this.props.arc)}
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave} />
-        <text style={label_style} dy="0.35em"
+        <text style={label_style} dy={label_offset} ref={this.grabSegmentText}
                           transform={transform} textAnchor={text_anchor}>
           {this.props.arc.data.label}
         </text>

@@ -106,6 +106,8 @@ export default class PollPage extends React.Component {
       flexWrap: "wrap",
       alignItems: "center"
     };
+    const pie_box = { width: "200", height: "200"};
+    const pie_box_style = { width: pie_box.width+"px", height: pie_box.height+"px"};
     return (
       <div className="container">
         <h2>Voting Page</h2>
@@ -117,12 +119,13 @@ export default class PollPage extends React.Component {
             onMouseLeave={this.onMouseLeave}
             onAddOption={this.onAddOption} />
           <div ref={this.grabPieParentRef} style={{position:"relative"}}>
-            <div style={{ height: 200, width: 200 }}>
-              <svg height={200} width={200}>
-                <g transform={'translate( 100, 100 )'}>
+            <div style={pie_box_style}>
+              <svg height={pie_box.height} width={pie_box.width}>
+                <g transform={'translate( '+pie_box.width/2+', '+pie_box.height/2+' )'}>
                   <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
                     onMouseEnter={this.onMouseEnter} colourScale={colourScale}
-                    highlight={this.state.highlight_option} />
+                    highlight={this.state.highlight_option}
+                    box = {pie_box} />
                 </g>
               </svg>
             </div>
