@@ -127,7 +127,7 @@ export default class PollPage extends React.Component {
                   <PieChart data={poll_data} onMouseLeave={this.onMouseLeave}
                     onMouseEnter={this.onMouseEnter} colourScale={colourScale}
                     highlight={this.state.highlight_option}
-                    box = {pie_box} />
+                    box={pie_box} />
                 </g>
               </svg>
             </div>
