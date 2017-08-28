@@ -61,7 +61,6 @@ export default class PollVoteForm extends React.Component {
                 Add Option
               </button>
           }
-
         </div>
         <h2>{poll.name}</h2>
         <div>
@@ -70,8 +69,7 @@ export default class PollVoteForm extends React.Component {
             <div>
               <OptionInput value={this.state.new_option_text} onChange={this.onNewOptionChange}
                 onOptionAdd={this.onAddOption} />
-                <button type="button" onClick={this.onAddOptionDone} >Done</button>
-              }
+              <button type="button" onClick={this.onAddOptionDone} >Done</button>
             </div>
             :<button type="button" disabled={!this.state.enabled} onClick={this.onSubmit} >
               Vote!
