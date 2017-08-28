@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default class OptionInput extends React.Component {
+  componentDidMount = () => {
+    this.option_field.focus();
+  };
   onAddClick = (e) => {
     this.props.onOptionAdd( this.props.new_option);
     this.option_field.focus();
