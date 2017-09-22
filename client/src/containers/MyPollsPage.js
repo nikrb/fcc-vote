@@ -34,6 +34,12 @@ export default class MyPollsPage extends React.Component {
       Actions.deletePoll( poll._id)
       .then( (response) => {
         console.log( "poll delete response:", response);
+        if( response.results === "ok"){
+          const list = this.state.list.filter( (p) => {
+            return p._id !== poll._id;
+          });
+          this.setState( {list});
+        }
       })
       .catch( (err) => {
         console.error( "poll delete failed:", err);
